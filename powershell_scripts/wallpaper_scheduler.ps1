@@ -94,12 +94,12 @@ Function Wallpaper-Scheduler-Refresh-Wallpaper {
     ECHO "Selected wallpaper: $wallpaper_filename"
 
     # set the selected wallpaper as desktop background
-    if (-Not $filename -eq "" -And $(Test-Path $filename -PathType Leaf)) {
+    if (-Not $wallpaper_filename -eq "" -And $(Test-Path $wallpaper_filename -PathType Leaf)) {
         [WallpaperScheduler]::set_wallpaper($wallpaper_filename)
         ECHO "Wallpaper set."
         ECHO "Refreshing wallpaper: done."
     } else {
-        ECHO "No wallpaper found for the current period of day!"
+        ECHO "No wallpaper found!"
         ECHO "Refreshing wallpaper: FAILED!"
     }    
 }
