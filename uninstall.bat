@@ -38,13 +38,13 @@ powershell -ExecutionPolicy ByPass -File %PS_CLEANUP_PATH%
 
 :: Remove scheduled tasks
 SET TASK_NAME="WallpaperRefresh_LOGON_%USERNAME%"
-SchTasks /Delete /TN %TASK_NAME% /F
+schtasks /Query /TN %TASK_NAME% >NUL 2>&1 && SchTasks /Delete /TN %TASK_NAME% /F
 
 SET TASK_NAME="WallpaperRefesh_Period_%USERNAME%"
-SchTasks /Delete /TN %TASK_NAME% /F
+schtasks /Query /TN %TASK_NAME% >NUL 2>&1 && SchTasks /Delete /TN %TASK_NAME% /F
 
 SET TASK_NAME="WallpaperRefreshDawnDusk_LOGON_%USERNAME%"
-SchTasks /Delete /TN %TASK_NAME% /F
+schtasks /Query /TN %TASK_NAME% >NUL 2>&1 && SchTasks /Delete /TN %TASK_NAME% /F
 
 
 ECHO.
