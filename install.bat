@@ -26,6 +26,9 @@ SET TASK_NAME="WallpaperRefreshDawnDusk_LOGON_%USERNAME%"
 SchTasks /Create /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_DD_REFRESH_PATH%\""
 
 
+SET /p FOO="Installation finished.\n\nYou can now populate the subfolders 'dawn', 'day', 'dusk', 'night' in your chosen wallpaper base directory.\n\nPress any key to continue..."
+
+
 :: ========== FUNCTIONS ==========
 EXIT /B
 
