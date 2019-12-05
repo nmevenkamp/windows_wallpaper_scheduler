@@ -3,6 +3,16 @@
 
     $config_filename = [WallpaperScheduler]::get_config_filename()
     
+    # create wallpaper base and sub dirs
+    New-Item -ItemType Directory -Force -Path $wallpaper_base_dir | Out-Null
+    ECHO "Created wallpaper base directory '$wallpaper_base_dir'."
+    $day_sections = "dawn", "day", "dusk", "night"
+    foreach ($day_section in $day_sections) {
+        $wallpaper_dir = Join-Path -Path $wallpaper_base_dir -ChildPath $day_section
+        New-Item -ItemType Directory -Force -Path $wallpaper_dir | Out-Null
+        ECHO "Created wallpaper sub directory '$wallpaper_dir'."
+    }
+
     # create app data directory
     $app_dir = [WallpaperScheduler]::get_app_dir()
     New-Item -ItemType Directory -Force -Path $app_dir | Out-Null
