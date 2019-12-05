@@ -35,10 +35,12 @@ If you modify the wallpaper base directory, you have to manually create the subf
 The configuration file and directory are deleted when executing the `uninstall.bat`.
 
 # Schedules
-The period wallpaper refreshes and on login dawn & dusk time fetches are realized through schedules via Windows' `Task Scheduler`.
+The periodic wallpaper refreshes and on login dawn & dusk time fetches are realized through schedules via Windows' `Task Scheduler`.
 These are created by the `install.bat` batch file. You can view these schedules by starting the `Task Scheduler` app (e.g. via `Windows Search` in your `Taskbar`). In the top left corner of the app, click on `Task Scheduler Library`. Then you should see, among others, the following three tasks:
 * `WallpaperRefresh_LOGON_<your username>`
 * `WallpaperRefesh_Period_<your username>`
 * `WallpaperRefreshDawnDusk_LOGON_<your username>`
+
+These tasks execute the respective powershell scripts inside the `powershell_scripts` folder of this program.
 
 These tasks are removed when executing the `uninstall.bat`.
