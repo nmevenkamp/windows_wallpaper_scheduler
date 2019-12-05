@@ -54,7 +54,7 @@ You can check whether everything is working as intended by running
 
 ```force_refresh.bat```
 
-This will open a terminal and display:
+This will open a terminal and display the following info:
 
 * most recently known dawn time
 * most recently known dusk time
