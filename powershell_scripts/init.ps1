@@ -10,6 +10,3 @@ $script_dir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 # Invoke init
 Wallpaper-Scheduler-Init $wallpaper_base_dir
-
-# Refresh wallpaper
-Wallpaper-Scheduler-Refresh-Wallpaper
