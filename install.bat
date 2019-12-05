@@ -16,8 +16,27 @@ SET PS_DD_REFRESH_PATH=%RETVAL%
 SET TASK_NAME="WallpaperRefresh_LOGON_%USERNAME%"
 SchTasks /Create /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_WP_REFRESH_PATH%\""
 
+:: Promt the user to specify the wallpaper refresh interval
+:try_again
+set /P "INTERVAL=Enter desired delay (in minutes) between wallpaper refreshes: "
+echo %INTERVAL%|findstr /r "[^0-9]" && (
+    echo Enter a number
+    goto :try_again
+)
+::clears the leading zeroes.
+cmd /c exit /b %INTERVAL%
+set /a month=%errorlevel%
+if %INTERVAL% gtr 1439  (
+   echo Enter a number between 1 and 1439
+   goto :try_again
+)
+
+if %INTERVAL% lss 1 (
+   echo Enter a number between 1 and 1439
+   goto :try_again
+)
+
 :: Add wallpaper refresh task (periodically)
-SET /p INTERVAL="Enter desired number of minutes between each wallpaper refresh (between 1 and 1439): "
 SET TASK_NAME="WallpaperRefesh_Period_%USERNAME%"
 SchTasks /Create /RU %USERNAME% /IT /SC MINUTE /MO %INTERVAL% /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_WP_REFRESH_PATH%\"" /ST 09:00
 
