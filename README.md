@@ -31,3 +31,14 @@ It stores:
 
 You can manipulate the dawn and dusk times manually in case they are not up-to-date (e.g. no internet connection, fetch failed, ...).
 If you modify the wallpaper base directory, you have to manually create the subfolders `dawn`, `day`, `dusk`, `night`.
+
+The configuration file and directory are deleted when executing the `uninstall.bat`.
+
+# Schedules
+The period wallpaper refreshes and on login dawn & dusk time fetches are realized through schedules via Windows' `Task Scheduler`.
+These are created by the `install.bat` batch file. You can view these schedules by starting the `Task Scheduler` app (e.g. via `Windows Search` in your `Taskbar`). In the top left corner of the app, click on `Task Scheduler Library`. Then you should see, among others, the following three tasks:
+* `WallpaperRefresh_LOGON_<your username>`
+* `WallpaperRefesh_Period_<your username>`
+* `WallpaperRefreshDawnDusk_LOGON_<your username>`
+
+These tasks are removed when executing the `uninstall.bat`.
