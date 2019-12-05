@@ -5,7 +5,7 @@ Periodically changes the windows desktop wallpaper based on the current period o
 1. Download the files and extract them into a folder
 2. Run `install.bat` as Adminstrator (`Right-Click` -> `Run as administrator`)
 3. Enter your desired wallpaper location (e.g. `C:\Users\<your username>\Pictures\Wallpapers`)
-4. Enter the desired period between wallpaper refreshes (in minutes)
+4. Enter the desired refresh delay in minutes (e.g. `30`)
 
 From now on, Windows will refresh your desktop background wallpaper periodically.
 The period is aligned to full hours, i.e. a 10 minute period leads to refreshes at 10:00, 10:10, 10:20 etc.
