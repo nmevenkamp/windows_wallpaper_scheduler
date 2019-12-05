@@ -48,10 +48,11 @@ SchTasks /Delete /TN %TASK_NAME% /F
 
 
 ECHO.
-ECHO Uninstallation complete.
+ECHO Local app data removed.
+ECHO Task Scheduler cleaned up.
 ECHO.
 ECHO.
-SET /p FOO="Press any key to continue..."
+SET /p FOO="Proceeding to delete program files. Press any key to continue..."
 
 
 :: Delete the program folder

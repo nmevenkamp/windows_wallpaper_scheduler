@@ -57,8 +57,10 @@ Function Wallpaper-Scheduler-Cleanup {
     
     # remove app data directory
     $app_dir = [WallpaperScheduler]::get_app_dir()
-    Remove-Item -Recurse -Force $app_dir
-    ECHO "Removed app data directory '$app_dir'."
+    if (Test-Path $app_dir -PathType Container) {
+        Remove-Item -Recurse -Force $app_dir
+        ECHO "Removed app data directory '$app_dir'."
+    }
 
     # check if parent directory (related to author) is now empty. If so, delete it as well
     $author_dir = [WallpaperScheduler]::get_author_dir()
