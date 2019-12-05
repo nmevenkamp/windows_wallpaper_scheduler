@@ -10,7 +10,7 @@ Periodically changes the windows desktop wallpaper based on the current period o
 From now on, Windows will refresh your desktop background wallpaper periodically.
 The period is aligned to full hours, i.e. a 10 minute period leads to refreshes at 10:00, 10:10, 10:20 etc.
 
-On each login, Windows will also to to update your local dawn and dusk times.
+On each login, Windows will also try to update your local dawn and dusk times.
 
 # Managing wallpapers
 * after installing, populate the subfolders `dawn`, `day`, `dusk`, `night` inside the wallpapers folder (specified during installation)
