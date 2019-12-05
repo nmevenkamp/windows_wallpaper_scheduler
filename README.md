@@ -42,6 +42,7 @@ These are created by the `install.bat` batch file. You can view these schedules 
 * `WallpaperRefreshDawnDusk_LOGON_<your username>`
 
 These tasks execute the respective powershell scripts inside the `powershell_scripts` folder of this program.
+
 You can force an immediate execution of each of these tasks via `Right-Click` -> `Run`.
 
 These tasks are removed when executing the `uninstall.bat`.
