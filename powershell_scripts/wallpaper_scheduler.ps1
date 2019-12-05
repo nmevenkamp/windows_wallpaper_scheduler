@@ -141,9 +141,11 @@ class WallpaperScheduler {
     static [int] $dawn_dusk_delta_minutes = 45
 
     static set_wallpaper([String] $filename) {
-        Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value $filename
-        for ($i=0; $i -lt 5; $i++) {
-            rundll32.exe user32.dll, UpdatePerUserSystemParameters
+        if ($(Test-Path $filename -PathType Leaf)) {
+            Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value $filename
+            for ($i=0; $i -lt 5; $i++) {
+                rundll32.exe user32.dll, UpdatePerUserSystemParameters
+            }
         }
     }
 
