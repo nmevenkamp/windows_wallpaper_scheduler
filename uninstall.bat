@@ -32,7 +32,7 @@ if '%errorlevel%' NEQ '0' (
 
 
 :: Run wallpaper scheduler cleanup via powershell
-CALL :NORMALIZEPATH "%0\..\powershell_scripts\cleanup.ps1"
+CALL :NORMALIZEPATH %0\..\powershell_scripts\cleanup.ps1
 SET PS_CLEANUP_PATH=%RETVAL%
 powershell -ExecutionPolicy ByPass -File %PS_CLEANUP_PATH%
 

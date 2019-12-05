@@ -32,15 +32,15 @@ if '%errorlevel%' NEQ '0' (
 
 
 :: Run wallpaper scheduler initialization via powershell
-CALL :NORMALIZEPATH "%0\..\powershell_scripts\init.ps1"
+CALL :NORMALIZEPATH %0\..\powershell_scripts\init.ps1
 SET PS_INIT_PATH=%RETVAL%
 powershell -ExecutionPolicy ByPass -File %PS_INIT_PATH%
 
 :: Set absolute powershell script paths
-CALL :NORMALIZEPATH "%0\..\powershell_scripts\refresh_wallpaper.ps1"
+CALL :NORMALIZEPATH %0\..\powershell_scripts\refresh_wallpaper.ps1
 SET PS_WP_REFRESH_PATH=%RETVAL%
 
-CALL :NORMALIZEPATH "%0\..\powershell_scripts\refresh_dawn_dusk_times.ps1"
+CALL :NORMALIZEPATH %0\..\powershell_scripts\refresh_dawn_dusk_times.ps1
 SET PS_DD_REFRESH_PATH=%RETVAL%
 
 :: Add wallpaper refresh task (on logon)
