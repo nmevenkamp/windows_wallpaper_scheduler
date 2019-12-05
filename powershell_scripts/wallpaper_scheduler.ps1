@@ -18,16 +18,23 @@
     New-Item -ItemType Directory -Force -Path $app_dir | Out-Null
     ECHO "Created app data directory '$app_dir'."
 
-    # fetch local weather information from wttr
-    ECHO "Fetching local weather information..."
-    $wttr_output = [TimeManager]::fetch_wttr_output()
-    ECHO "Fetching local weather information: done."
+    # try to fetch local dawn and dusk times
+    try {
+        # fetch local weather information from wttr
+        ECHO "Fetching local weather information..."
+        $wttr_output = [TimeManager]::fetch_wttr_output()
+        ECHO "Fetching local weather information: done."
 
-    # parse dawn and dusk times
-    $t_dawn = [TimeManager]::get_local_day_section_time($wttr_output, "dawn")
-    $t_dusk = [TimeManager]::get_local_day_section_time($wttr_output, "dusk")
+        # parse dawn and dusk times
+        $t_dawn = [TimeManager]::get_local_day_section_time($wttr_output, "dawn")
+        $t_dusk = [TimeManager]::get_local_day_section_time($wttr_output, "dusk")
+    } catch {
+        $t_dawn = "07:00"
+        $t_dusk = "17:00"
+        ECHO "Fetching local weather information: FAILED! Using default dawn and dusk times."
+    }
+
     $t_cur = Get-Date -Format "HH:mm"
-    ECHO "Parsed current local dawn and dusk times."
     ECHO "Dawn time:    $t_dawn"
     ECHO "Dusk time:    $t_dusk"
     ECHO "Current time: $t_cur"
@@ -90,15 +97,21 @@ Function Wallpaper-Scheduler-Refresh-Wallpaper {
 Function Wallpaper-Scheduler-Refresh-Dawn-Dusk-Times {
     ECHO "Refreshing dawn and dusk times..."
 
-    # fetch local weather information from wttr
-    $wttr_output = [TimeManager]::fetch_wttr_output()
-    ECHO "Fetched local weather information."
+    # try to fetch local dawn and dusk times
+    try {
+        # fetch local weather information from wttr
+        ECHO "Fetching local weather information..."
+        $wttr_output = [TimeManager]::fetch_wttr_output()
+        ECHO "Fetching local weather information: done."
 
-    # parse dawn and dusk times
-    $t_dawn = [TimeManager]::get_local_day_section_time($wttr_output, "dawn")
-    $t_dusk = [TimeManager]::get_local_day_section_time($wttr_output, "dusk")
+        # parse dawn and dusk times
+        $t_dawn = [TimeManager]::get_local_day_section_time($wttr_output, "dawn")
+        $t_dusk = [TimeManager]::get_local_day_section_time($wttr_output, "dusk")
+    } catch {
+        ECHO "Fetching local weather information: FAILED! Aborting."
+    }
+
     $t_cur = Get-Date -Format "HH:mm"
-    ECHO "Parsed current local dawn and dusk times."
     ECHO "Dawn time:    $t_dawn"
     ECHO "Dusk time:    $t_dusk"
     ECHO "Current time: $t_cur"
