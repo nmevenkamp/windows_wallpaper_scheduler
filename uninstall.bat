@@ -8,13 +8,17 @@ SET PS_CLEANUP_PATH=%RETVAL%
 powershell -ExecutionPolicy ByPass -File "%PS_CLEANUP_PATH"
 
 :: Remove scheduled tasks
-SchTasks /Delete /TN "WallpaperScheduler: refresh WP (logon)" /F
-SchTasks /Delete /TN "WallpaperScheduler: refresh WP (periodically)" /F
-SchTasks /Delete /TN "WallpaperScheduler: refresh dawn & dusk times (logon)" /F
+SET TASK_NAME="WallpaperRefresh_LOGON_%USERNAME%"
+SchTasks /Delete /TN %TASK_NAME% /F
+
+SET TASK_NAME="WallpaperRefesh_Period_%USERNAME%"
+SchTasks /Delete /TN %TASK_NAME% /F
+
+SET TASK_NAME="WallpaperRefreshDawnDusk_LOGON_%USERNAME%"
+SchTasks /Delete /TN %TASK_NAME% /F
 
 :: Delete the program folder
 start /b "" cmd /c rd /s /q "%~dp0"
-
 
 
 :: ========== FUNCTIONS ==========
