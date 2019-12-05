@@ -1,4 +1,4 @@
-@echo off
+@ECHO OFF
 
 :: Run wallpaper scheduler initialization via powershell
 CALL :NORMALIZEPATH "%0\..\powershell_scripts\init.ps1"
@@ -26,10 +26,13 @@ SET TASK_NAME="WallpaperRefreshDawnDusk_LOGON_%USERNAME%"
 SchTasks /Create /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_DD_REFRESH_PATH%\""
 
 
+ECHO.
 ECHO Installation finished.
-ECHO
-ECHO You can now populate the subfolders 'dawn', 'day', 'dusk' and 'night' in your chosen wallpaper base directory with .jpg images.
-ECHO 
+ECHO.
+ECHO You can now populate the subfolders 'dawn', 'day', 'dusk' and 'night'
+ECHO in your chosen wallpaper directory with .jpg images.
+ECHO.
+ECHO.
 SET /p FOO="Press any key to continue..."
 
 
