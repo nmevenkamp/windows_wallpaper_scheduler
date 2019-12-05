@@ -3,7 +3,7 @@ Periodically changes the windows desktop wallpaper based on the current period o
 
 # Install
 1. Download the files and extract them into a folder
-2. Run `install.bat` as Adminstrator (`Right-Click` -> `Run as administrator`)
+2. Double-click `install.bat`
 3. Enter your desired wallpaper location (e.g. `C:\Users\<your username>\Pictures\Wallpapers`)
 4. Enter the desired refresh delay in minutes (e.g. `30`)
 
@@ -20,7 +20,7 @@ On each login, Windows will also try to update your local dawn and dusk times.
 Run `force_refresh.bat` to update the wallpaper immediately.
 
 # Uninstall
-Run `uninstall.bat` as Administrator (`Right-Click` -> `Run as administrator`)
+Double-click `uninstall.bat`
 
 # Configuration
 The configuration file for this program is located at
