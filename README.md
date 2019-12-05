@@ -48,3 +48,14 @@ These tasks execute the respective powershell scripts inside the `powershell_scr
 You can force an immediate execution of each of these tasks via `Right-Click` -> `Run`.
 
 These tasks are removed when executing the `uninstall.bat`.
+
+# Troubleshooting
+You can check whether everything is working as intended by running
+
+```force_refresh.bat```
+
+This will open a terminal and display:
+
+* current day section (`dawn`, `day`, `dusk` or `night`)
+* resulting wallpaper directory (e.g. `C:\Users\<your username>\Pictures\Wallpapers\day`)
+* the chosen wallpaper (or an error message if none was found)
