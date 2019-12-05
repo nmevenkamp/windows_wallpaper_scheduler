@@ -24,7 +24,7 @@ SET /p FOO="Press any key to continue..."
 
 
 :: Delete the program folder
-::start /b "" cmd /c rd /s /q "%~dp0"
+start /b "" cmd /c rd /s /q "%~dp0"
 
 
 :: ========== FUNCTIONS ==========
