@@ -17,11 +17,7 @@ On each login, Windows will also try to update your local dawn and dusk times.
 * wallpapers need to be in `JPEG` format with `*.jpg` extension
 * on each refresh, a random wallpaper will be selected from the subfolder corresponding to your current day period
 
-In case you want to refresh the wallpaper immediately, run
-
-```force_refresh.bat```
-
-inside the program folder (does not require admin rights).
+Run `force_refresh.bat` to update the wallpaper immediately.
 
 # Uninstall
 Run `uninstall.bat` as Administrator (`Right-Click` -> `Run as administrator`)
