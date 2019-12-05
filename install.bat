@@ -14,7 +14,7 @@ SET PS_DD_REFRESH_PATH=%RETVAL%
 
 :: Add wallpaper refresh task (on logon)
 SET TASK_NAME="WallpaperRefresh_LOGON_%USERNAME%"
-SchTasks /Create /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_WP_REFRESH_PATH%\""
+SchTasks /Create /F /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_WP_REFRESH_PATH%\""
 
 :: Prompt the user to specify the wallpaper refresh interval
 :try_again
@@ -38,11 +38,11 @@ IF %INTERVAL% lss 1 (
 
 :: Add wallpaper refresh task (periodically)
 SET TASK_NAME="WallpaperRefesh_Period_%USERNAME%"
-SchTasks /Create /RU %USERNAME% /IT /SC MINUTE /MO %INTERVAL% /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_WP_REFRESH_PATH%\"" /ST 09:00
+SchTasks /Create /F /RU %USERNAME% /IT /SC MINUTE /MO %INTERVAL% /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_WP_REFRESH_PATH%\"" /ST 09:00
 
 :: Add dawn dusk time refresh task (on logon)
 SET TASK_NAME="WallpaperRefreshDawnDusk_LOGON_%USERNAME%"
-SchTasks /Create /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_DD_REFRESH_PATH%\""
+SchTasks /Create /F /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_DD_REFRESH_PATH%\""
 
 
 ECHO.
