@@ -15,7 +15,7 @@ On each login, Windows will also try to update your local dawn and dusk times.
 # Managing wallpapers
 * after installing, populate the subfolders `dawn`, `day`, `dusk`, `night` inside the wallpapers folder (specified during installation)
 * wallpapers need to be in `JPEG` format with `*.jpg` extension
-* on each refresh, a random wallpaper will be selected from the subfolder corresponding to the current day period
+* on each refresh, a random wallpaper will be selected from the subfolder corresponding to your current day period
 
 # Uninstall
 Run `uninstall.bat` as Administrator (`Right-Click` -> `Run as administrator`)
