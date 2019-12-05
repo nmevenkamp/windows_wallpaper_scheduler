@@ -16,6 +16,7 @@ On each login, Windows will also try to update your local dawn and dusk times.
 * after installing, populate the subfolders `dawn`, `day`, `dusk`, `night` inside the wallpapers folder (specified during installation)
 * wallpapers need to be in `JPEG` format with `*.jpg` extension
 * on each refresh, a random wallpaper will be selected from the subfolder corresponding to your current day period
+* wallpaper resources: [https://wallpaperaccess.com/4k](https://wallpaperaccess.com/4k)
 
 Run `force_refresh.bat` to update the wallpaper immediately.
 
