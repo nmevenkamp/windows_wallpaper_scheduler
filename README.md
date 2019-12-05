@@ -56,6 +56,9 @@ You can check whether everything is working as intended by running
 
 This will open a terminal and display:
 
-* current day section (`dawn`, `day`, `dusk` or `night`)
+* most recently known dawn time
+* most recently known dusk time
+* current time
+* inferred current day section (`dawn`, `day`, `dusk` or `night`)
 * resulting wallpaper directory (e.g. `C:\Users\<your username>\Pictures\Wallpapers\day`)
 * the chosen wallpaper (or an error message if none was found)
