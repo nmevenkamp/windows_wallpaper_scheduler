@@ -136,7 +136,7 @@ Function Wallpaper-Scheduler-Refresh-Dawn-Dusk-Times {
 
 class WallpaperScheduler {
     static [String] $author   = "nmevenkamp"
-    static [String] $app_name = "wallpaper_scheduler"
+    static [String] $app_name = "windows_wallpaper_scheduler"
 
     static [int] $dawn_dusk_delta_minutes = 45
 
