@@ -75,8 +75,13 @@ Function Wallpaper-Scheduler-Refresh-Wallpaper {
     ECHO "Refreshing wallpaper..."
 
     # determine current day section (dawn, day, dusk, night)
-    $current_day_section = [WallpaperScheduler]::get_current_day_section()
-    ECHO "Current day section: $current_day_section"    
+    $t_cur = Get-Date -Format "HH:mm"
+    $config = Get-Content $([WallpaperScheduler]::get_config_filename()) | ConvertFrom-Json
+    $current_day_section = [TimeManager]::get_day_section($t_cur, $config.t_dawn, $config.t_dusk, $([WallpaperScheduler]::dawn_dusk_delta_minutes))
+    ECHO "Dawn time:           $($config.t_dawn)"
+    ECHO "Dusk time:           $($config.t_dusk)"
+    ECHO "Current time:        $t_cur"
+    ECHO "Current day section: $current_day_section"   
 
     # determine wallpaper directory based on current day section
     $wallpaper_dir = Join-Path -Path $([WallpaperScheduler]::get_wallpaper_base_dir()) -ChildPath $current_day_section
@@ -87,10 +92,14 @@ Function Wallpaper-Scheduler-Refresh-Wallpaper {
     ECHO "Selected wallpaper: $wallpaper_filename"
 
     # set the selected wallpaper as desktop background
-    [WallpaperScheduler]::set_wallpaper($wallpaper_filename)
-    ECHO "Wallpaper set."
-
-    ECHO "Refreshing wallpaper: done."
+    if (-Not $filename -eq "" -And $(Test-Path $filename -PathType Leaf)) {
+        [WallpaperScheduler]::set_wallpaper($wallpaper_filename)
+        ECHO "Wallpaper set."
+        ECHO "Refreshing wallpaper: done."
+    } else {
+        ECHO "No wallpaper found for the current period of day!"
+        ECHO "Refreshing wallpaper: FAILED!"
+    }    
 }
 
 
@@ -141,11 +150,9 @@ class WallpaperScheduler {
     static [int] $dawn_dusk_delta_minutes = 45
 
     static set_wallpaper([String] $filename) {
-        if ($(Test-Path $filename -PathType Leaf)) {
-            Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value $filename
-            for ($i=0; $i -lt 5; $i++) {
-                rundll32.exe user32.dll, UpdatePerUserSystemParameters
-            }
+        Set-ItemProperty -path 'HKCU:\Control Panel\Desktop\' -name wallpaper -value $filename
+        for ($i=0; $i -lt 5; $i++) {
+            rundll32.exe user32.dll, UpdatePerUserSystemParameters
         }
     }
 
@@ -164,16 +171,6 @@ class WallpaperScheduler {
     static [String] get_wallpaper_base_dir() {
         $config = Get-Content $([WallpaperScheduler]::get_config_filename()) | ConvertFrom-Json
         return $config.wallpaper_base_dir
-    }
-
-    static [String] get_current_day_section() {
-        # fetch current time (HH:mm)
-        $t_cur = Get-Date -Format "HH:mm"
-
-        # read config
-        $config = Get-Content $([WallpaperScheduler]::get_config_filename()) | ConvertFrom-Json
-
-        return [TimeManager]::get_day_section($t_cur, $config.t_dawn, $config.t_dusk, $([WallpaperScheduler]::dawn_dusk_delta_minutes))
     }
 }
 

@@ -7,8 +7,6 @@ powershell -ExecutionPolicy ByPass -File %PS_REFRESH_WP_PATH%
 
 
 ECHO.
-ECHO Wallpaper has been refreshed.
-ECHO.
 ECHO.
 SET /p FOO="Press any key to continue..."
 
