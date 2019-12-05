@@ -9,8 +9,9 @@
     ECHO "Created app data directory '$app_dir'."
 
     # fetch local weather information from wttr
+    ECHO "Fetching local weather information..."
     $wttr_output = [TimeManager]::fetch_wttr_output()
-    ECHO "Fetched local weather information."
+    ECHO "Fetching local weather information: done."
 
     # parse dawn and dusk times
     $t_dawn = [TimeManager]::get_local_day_section_time($wttr_output, "dawn")

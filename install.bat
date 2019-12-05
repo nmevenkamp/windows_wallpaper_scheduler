@@ -1,7 +1,9 @@
 @echo off
 
 :: Run wallpaper scheduler initialization via powershell
-powershell -ExecutionPolicy ByPass -File init.ps1
+CALL :NORMALIZEPATH "%0\..\powershell_scripts\init.ps1"
+SET PS_INIT_PATH=%RETVAL%
+powershell -ExecutionPolicy ByPass -File %PS_INIT_PATH%
 
 :: Set absolute powershell script paths
 CALL :NORMALIZEPATH "%0\..\powershell_scripts\refresh_wallpaper.ps1"
