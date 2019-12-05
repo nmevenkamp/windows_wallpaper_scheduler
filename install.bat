@@ -16,24 +16,24 @@ SET PS_DD_REFRESH_PATH=%RETVAL%
 SET TASK_NAME="WallpaperRefresh_LOGON_%USERNAME%"
 SchTasks /Create /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR "powershell -ExecutionPolicy ByPass -WindowStyle hidden -File \"%PS_WP_REFRESH_PATH%\""
 
-:: Promt the user to specify the wallpaper refresh interval
+:: Prompt the user to specify the wallpaper refresh interval
 :try_again
-set /P "INTERVAL=Enter desired delay (in minutes) between wallpaper refreshes: "
-echo %INTERVAL%|findstr /r "[^0-9]" && (
-    echo Enter a number
-    goto :try_again
+SET /P "INTERVAL=Enter desired delay (in minutes) between wallpaper refreshes: "
+ECHO %INTERVAL%|findstr /r "[^0-9]" && (
+    ECHO Enter a number
+    GOTO :try_again
 )
 ::clears the leading zeroes.
 cmd /c exit /b %INTERVAL%
-set /a month=%errorlevel%
-if %INTERVAL% gtr 1439  (
-   echo Enter a number between 1 and 1439
-   goto :try_again
+SET /a month=%errorlevel%
+IF %INTERVAL% gtr 1439  (
+   ECHO Enter a number between 1 and 1439
+   GOTO :try_again
 )
 
-if %INTERVAL% lss 1 (
-   echo Enter a number between 1 and 1439
-   goto :try_again
+IF %INTERVAL% lss 1 (
+   ECHO Enter a number between 1 and 1439
+   GOTO :try_again
 )
 
 :: Add wallpaper refresh task (periodically)
@@ -46,7 +46,7 @@ SchTasks /Create /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR "powershell 
 
 
 ECHO.
-ECHO Installation finished.
+ECHO Installation complete.
 ECHO.
 ECHO You can now populate the subfolders 'dawn', 'day', 'dusk' and 'night'
 ECHO in your chosen wallpaper directory with .jpg images.
