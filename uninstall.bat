@@ -15,6 +15,14 @@ SchTasks /Delete /TN %TASK_NAME% /F
 SET TASK_NAME="WallpaperRefreshDawnDusk_LOGON_%USERNAME%"
 SchTasks /Delete /TN %TASK_NAME% /F
 
+
+ECHO.
+ECHO Uninstallation complete.
+ECHO.
+ECHO.
+SET /p FOO="Press any key to continue..."
+
+
 :: Delete the program folder
 ::start /b "" cmd /c rd /s /q "%~dp0"
 
