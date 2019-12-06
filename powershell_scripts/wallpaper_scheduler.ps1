@@ -49,15 +49,6 @@
     $config | ConvertTo-Json -depth 100 | Out-File $config_filename
     ECHO "Config written to '$config_filename'."
 
-    # create shortcuts for power shell scripts
-    # NOTE: this is a workaround for flashing powershell console on scheduled task execution
-    #       it is a known issue: https://github.com/PowerShell/PowerShell/issues/3028
-    $script_names = "refresh_wallpaper", "refresh_dawn_dusk_times"
-    foreach ($script_name in $script_names) {
-        $s_path = [WallpaperScheduler]::create_shortcut($script_name)
-        ECHO "Created shortcut '$s_path'."
-    }
-
     ECHO "Initializing wallpaper scheduler: done."
 }
 
@@ -184,19 +175,6 @@ class WallpaperScheduler {
         $config = Get-Content $([WallpaperScheduler]::get_config_filename()) | ConvertFrom-Json
 
         return $config.wallpaper_base_dir
-    }
-
-    static [String] create_shortcut($script_name) {
-        $s_path = Join-Path -Path $([WallpaperScheduler]::get_app_dir()) -ChildPath "$script_name.lnk"
-        $ps_path = Join-Path -Path $PSScriptRoot -ChildPath "$script_name.ps1"
-        $s = (New-Object -COM WScript.Shell).CreateShortcut($s_path)
-        $s.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-        $s.Arguments =  "-ExecutionPolicy Bypass -File $ps_path"
-        $s.WorkingDirectory = "C:\Windows\System32\WindowsPowerShell\v1.0\"
-        $s.WindowStyle = "7" # minimized 
-        $s.Save()
-
-        return $s_path
     }
 }
 
