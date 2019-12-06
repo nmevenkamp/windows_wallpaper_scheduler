@@ -44,6 +44,7 @@
         wallpaper_base_dir = $wallpaper_base_dir
         t_dawn = $t_dawn
         t_dusk = $t_dusk
+        current_wallpaper_path = ""
     }
 
     $config | ConvertTo-Json -depth 100 | Out-File $config_filename
@@ -90,9 +91,29 @@ Function Wallpaper-Scheduler-Refresh-Wallpaper {
     $wallpaper_dir = Join-Path -Path $([WallpaperScheduler]::get_wallpaper_base_dir()) -ChildPath $current_day_section
     ECHO "Wallpaper directory: '$wallpaper_dir'"
 
-    # randomly select a .jpg from the specified wallpaper folder
-    $wallpaper_filename = (Get-ChildItem $wallpaper_dir -R -File -Include "*.jpg" | Get-Random).FullName
-    ECHO "Selected wallpaper: $wallpaper_filename"
+    # read config
+    $config_filename = [WallpaperScheduler]::get_config_filename()
+    $config = Get-Content $config_filename | ConvertFrom-Json
+    ECHO "Config read."
+
+    # randomly select a .jpg from the specified wallpaper folder (that is not equal to the current one)
+    $num_wallpapers = (Get-ChildItem $wallpaper_dir -R -File -Include "*.jpg" | Measure-Object).Count;
+    if ($num_wallpapers -gt 0) {
+        # perform random selection (excluding the current wallpaper if more than one is available)
+        if ($num_wallpapers -gt 1) {
+            $wallpaper_filename = (Get-ChildItem $wallpaper_dir -R -File -Include "*.jpg" -Exclude $config.current_wallpaper_path | Get-Random).FullName
+        } else {
+            $wallpaper_filename = (Get-ChildItem $wallpaper_dir -R -File -Include "*.jpg" | Get-Random).FullName
+        }
+        ECHO "Selected wallpaper: $wallpaper_filename"
+
+        # write new wallpaper path to config
+        $config.current_wallpaper_path = $wallpaper_filename
+        $config | ConvertTo-Json -depth 100 | Set-Content $config_filename
+        ECHO "Updated config saved to '$config_filename'."
+    } else {
+        $wallpaper_filename = ""
+    }
 
     # set the selected wallpaper as desktop background
     if (-Not $wallpaper_filename -eq "" -And $(Test-Path $wallpaper_filename -PathType Leaf)) {
