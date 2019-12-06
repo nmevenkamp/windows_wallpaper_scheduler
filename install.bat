@@ -72,7 +72,9 @@ IF %INTERVAL% lss 1 (
 
 :: Add wallpaper refresh task (periodically)
 SET TASK_NAME="WallpaperRefesh_Period_%USERNAME%"
-SchTasks /Create /F /RU %USERNAME% /SC MINUTE /MO %INTERVAL% /TN %TASK_NAME% /TR "wscript \"%VBS_PATH%\" \"%PS_WP_REFRESH_PATH%\"" /ST 09:00
+SET T_CUR=%TIME: =0%
+SET H_CUR=%T_CUR:~0,2%
+SchTasks /Create /F /RU %USERNAME% /SC MINUTE /MO %INTERVAL% /TN %TASK_NAME% /TR "wscript \"%VBS_PATH%\" \"%PS_WP_REFRESH_PATH%\"" /ST %H_CUR%:00
 
 :: Add dawn dusk time refresh task (on logon) 
 SET TASK_NAME="WallpaperRefreshDawnDusk_LOGON_%USERNAME%"

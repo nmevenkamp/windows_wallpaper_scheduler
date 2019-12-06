@@ -3,8 +3,7 @@ $script_dir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 . "$script_dir\wallpaper_scheduler.ps1"
 
 # Parse command line arguments
-$wallpaper_base_dir = "C:\MicroSD\Pictures\Desktop Wallpapers"
-$input_valid = $true
+$input_valid = $false
 while (-Not $input_valid) {
     $wallpaper_base_dir = Read-Host -Prompt "Specify your desired wallpaper base directory"
     
