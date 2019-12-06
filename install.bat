@@ -36,14 +36,19 @@ CALL :NORMALIZEPATH %0\..\powershell_scripts\init.ps1
 SET PS_INIT_PATH=%RETVAL%
 powershell -ExecutionPolicy ByPass -File %PS_INIT_PATH%
 
-:: Set absolute powershell script paths
-SET APP_DIR=%LOCALAPPDATA%\nmevenkamp\windows_wallpaper_scheduler
-SET SHORTCUT_WP_REFRESH_PATH=%APP_DIR%\refresh_wallpaper.lnk
-SET SHORTCUT_DD_REFRESH_PATH=%APP_DIR%\refresh_dawn_dusk_times.lnk
+:: Set absolute powershell and vbs script paths
+CALL :NORMALIZEPATH %0\..\powershell_scripts\refresh_wallpaper.ps1
+SET PS_WP_REFRESH_PATH=%RETVAL%
+
+CALL :NORMALIZEPATH %0\..\powershell_scripts\refresh_dawn_dusk_times.ps1
+SET PS_DD_REFRESH_PATH=%RETVAL%
+
+CALL :NORMALIZEPATH %0\..\vbs\ps_run.vbs
+SET VBS_PATH=%RETVAL%
 
 :: Add wallpaper refresh task (on logon)
 SET TASK_NAME="WallpaperRefresh_LOGON_%USERNAME%"
-SchTasks /Create /F /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR %SHORTCUT_WP_REFRESH_PATH%
+SchTasks /Create /F /RU %USERNAME% /SC ONLOGON /TN %TASK_NAME% /TR "wscript \"%VBS_PATH%\" \"%PS_WP_REFRESH_PATH%\""
 
 :: Prompt the user to specify the wallpaper refresh interval
 :try_again
@@ -67,11 +72,11 @@ IF %INTERVAL% lss 1 (
 
 :: Add wallpaper refresh task (periodically)
 SET TASK_NAME="WallpaperRefesh_Period_%USERNAME%"
-SchTasks /Create /F /RU %USERNAME% /IT /SC MINUTE /MO %INTERVAL% /TN %TASK_NAME% /TR %SHORTCUT_WP_REFRESH_PATH% /ST 09:00
+SchTasks /Create /F /RU %USERNAME% /SC MINUTE /MO %INTERVAL% /TN %TASK_NAME% /TR "wscript \"%VBS_PATH%\" \"%PS_WP_REFRESH_PATH%\"" /ST 09:00
 
-:: Add dawn dusk time refresh task (on logon)
+:: Add dawn dusk time refresh task (on logon) 
 SET TASK_NAME="WallpaperRefreshDawnDusk_LOGON_%USERNAME%"
-SchTasks /Create /F /RU %USERNAME% /IT /SC ONLOGON /TN %TASK_NAME% /TR %SHORTCUT_DD_REFRESH_PATH%
+SchTasks /Create /F /RU %USERNAME% /SC ONLOGON /TN %TASK_NAME% /TR "wscript \"%VBS_PATH%\" \"%PS_DD_REFRESH_PATH%\""
 
 
 ECHO.
