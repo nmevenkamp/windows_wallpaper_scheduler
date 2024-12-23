@@ -46,10 +46,6 @@ SET PS_DD_REFRESH_PATH=%RETVAL%
 CALL :NORMALIZEPATH %0\..\vbs\ps_run.vbs
 SET VBS_PATH=%RETVAL%
 
-:: Add wallpaper refresh task (on logon)
-SET TASK_NAME="WallpaperRefresh_LOGON_%USERNAME%"
-SchTasks /Create /F /RU %USERNAME% /SC ONLOGON /TN %TASK_NAME% /TR "wscript \"%VBS_PATH%\" \"%PS_WP_REFRESH_PATH%\""
-
 :: Prompt the user to specify the wallpaper refresh interval
 :try_again
 SET /P "INTERVAL=Enter desired delay (in minutes) between wallpaper refreshes: "
@@ -70,15 +66,15 @@ IF %INTERVAL% lss 1 (
    GOTO :try_again
 )
 
-:: Add wallpaper refresh task (periodically)
-SET TASK_NAME="WallpaperRefesh_Period_%USERNAME%"
+:: Add wallpaper refresh task
+SET TASK_NAME="WallpaperRefesh_ChangeWallpaper_%USERNAME%"
 SET T_CUR=%TIME: =0%
 SET H_CUR=%T_CUR:~0,2%
-SchTasks /Create /F /RU %USERNAME% /SC MINUTE /MO %INTERVAL% /TN %TASK_NAME% /TR "wscript \"%VBS_PATH%\" \"%PS_WP_REFRESH_PATH%\"" /ST %H_CUR%:00
+SchTasks /Create /F /SC MINUTE /MO %INTERVAL% /TN %TASK_NAME% /TR "wscript \"%VBS_PATH%\" \"%PS_WP_REFRESH_PATH%\"" /ST %H_CUR%:00
 
-:: Add dawn dusk time refresh task (on logon) 
-SET TASK_NAME="WallpaperRefreshDawnDusk_LOGON_%USERNAME%"
-SchTasks /Create /F /RU %USERNAME% /SC ONLOGON /TN %TASK_NAME% /TR "wscript \"%VBS_PATH%\" \"%PS_DD_REFRESH_PATH%\""
+:: Add dawn dusk time refresh task
+SET TASK_NAME="WallpaperRefresh_UpdateDawnDusk_%USERNAME%"
+SchTasks /Create /F /TN %TASK_NAME% /XML "update_dawn_dusk_task.xml"
 
 
 ECHO.
