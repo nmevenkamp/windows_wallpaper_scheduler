@@ -76,6 +76,10 @@ Function Wallpaper-Scheduler-Cleanup {
 
 
 Function Wallpaper-Scheduler-Refresh-Wallpaper {
+    param (
+        [boolean]$force_update
+    )
+
     ECHO "Refreshing wallpaper..."
 
     # determine current day section (dawn, day, dusk, night)
@@ -90,6 +94,12 @@ Function Wallpaper-Scheduler-Refresh-Wallpaper {
     # determine wallpaper directory based on current day section
     $wallpaper_dir = Join-Path -Path $([WallpaperScheduler]::get_wallpaper_base_dir()) -ChildPath $current_day_section
     ECHO "Wallpaper directory: '$wallpaper_dir'"
+    $current_wallpaper_dir = Split-Path -Path $config.current_wallpaper_path
+    
+    if (($current_wallpaper_dir -eq $wallpaper_dir) -and -not $force_update) {
+        ECHO "Wallpaper directory is already correct. Aborting."
+        return
+    }
 
     # read config
     $config_filename = [WallpaperScheduler]::get_config_filename()
@@ -141,7 +151,9 @@ Function Wallpaper-Scheduler-Refresh-Dawn-Dusk-Times {
         $t_dawn = [TimeManager]::get_local_day_section_time($wttr_output, "dawn")
         $t_dusk = [TimeManager]::get_local_day_section_time($wttr_output, "dusk")
     } catch {
-        ECHO "Fetching local weather information: FAILED! Aborting."
+        $t_dawn = "07:00"
+        $t_dusk = "17:00"
+        ECHO "Fetching local weather information: FAILED! Using default dawn and dusk times."    
     }
 
     $t_cur = Get-Date -Format "HH:mm"

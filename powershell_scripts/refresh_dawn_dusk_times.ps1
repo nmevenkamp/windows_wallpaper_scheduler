@@ -4,3 +4,4 @@ $script_dir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 # Invoke dawn and dusk time refresh
 Wallpaper-Scheduler-Refresh-Dawn-Dusk-Times
+Wallpaper-Scheduler-Refresh-Wallpaper
